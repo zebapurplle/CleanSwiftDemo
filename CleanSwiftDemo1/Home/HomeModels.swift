@@ -10,22 +10,32 @@
 //
 
 import UIKit
+import Alamofire
 
-enum Home
-{
+struct Home: Codable {
+    
+    
     // MARK: Use cases
-    enum User
-    {
+    struct User: Codable {
+                
         struct Request
         {
         }
-        struct Response
+        struct Response: Codable
         {
-            var users: [UserModel]
+            let data: [UserModel1]?
         }
-        struct ViewModel
+        struct ViewModel: Codable
         {
-            var userList: [UserModel]
+            var userList: [UserModel1]
         }
     }
+}
+
+extension Home: APIWrapperModelType, APIService {
+    
+    typealias APICodable = Home.User.Response
+    static var httpMethod: HTTPMethod = .post
+    static var url: String = ""
+    
 }

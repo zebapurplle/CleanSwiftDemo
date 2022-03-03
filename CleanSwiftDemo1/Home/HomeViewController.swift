@@ -23,7 +23,7 @@ class HomeViewController: UIViewController, HomeDisplayLogic {
     
     var interactor: HomeBusinessLogic?
     var router: (NSObjectProtocol & HomeRoutingLogic & HomeDataPassing)?
-    var userList: [UserModel] = []
+    var userList: [UserModel1] = []
     
     // MARK: Object lifecycle
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

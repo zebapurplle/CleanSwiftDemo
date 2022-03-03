@@ -13,13 +13,22 @@ import UIKit
 
 class LoginWorker
 {
-    typealias SuccessHandler = (_ success:Bool)->Void
+    typealias SuccessHandler = (_ loginResp:LoginResponse?)->Void
     
     /// Call login API
     func login(email: String, password: String, completionHandler: @escaping SuccessHandler)
     {
-        ServiceUtility.callWebServiceWithLink("https://restful-booker.herokuapp.com/auth", params: ["username" : email,"password" : password], completionHandler: { (success,resp) -> Void in
-            completionHandler(success)
-        })
+        Login.url = "https://restful-booker.herokuapp.com/auth"
+        Login.params = ["username" : email,"password" : password]
+        Login.httpMethod = .post
+        
+        Login.loadData(apiWrapper: Login.apiWrapper()) { response, model in
+            switch response {
+            case .success:
+                completionHandler(model)
+            case .error:
+                completionHandler(nil)
+            }
+        }
     }
 }

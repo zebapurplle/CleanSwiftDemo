@@ -10,8 +10,9 @@
 //
 
 import UIKit
+import Alamofire
 
-enum Login {
+struct Login: Codable {
     
     // MARK: - Use cases
     struct LoginInfo {
@@ -19,20 +20,34 @@ enum Login {
         var password : String
     }
     
-    enum User {
+    struct User: Codable {
         
         struct Request {
             var loginInfo : LoginInfo
         }
         
-        struct Response {
-            var succes : Bool
+        struct Response: Codable {
+            var loginResp: LoginResponse?
+            var succes : Bool?
             var message: String?
         }
         
-        struct ViewModel {
+        struct ViewModel: Codable {
             var isSuccess : Bool
             var message: String?
         }
     }
+}
+extension Login: APIWrapperModelType, APIService {
+    
+    typealias APICodable = LoginResponse
+    static var httpMethod: HTTPMethod = .post
+    static var url: String = ""
+    static var params: [String: Any] = [:]
+}
+
+struct LoginResponse: Codable {
+    
+    var token: String?
+    var reason: String?
 }

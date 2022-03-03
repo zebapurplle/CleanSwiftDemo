@@ -13,25 +13,39 @@ import UIKit
 
 class HomeWorker {
     
-    typealias SuccessHandler = (_ success:Bool,_ users: [UserModel])->Void
+    typealias SuccessHandler = (_ success:Bool,_ users: [UserModel1]?)->Void
 
     func getUserList(completionHandler: @escaping SuccessHandler) {
         
-        ServiceUtility.callWebServiceWithLink("https://gorest.co.in/public/v2/users", parameters: NSMutableDictionary()) { success, resp in
-            do {
-                var users = [UserModel]()
-                for user in resp {
-                    let jsonDecoder = JSONDecoder()
-                    let userData = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
-                    let user = try jsonDecoder.decode(UserModel.self, from: userData)
-                    users.append(user)
-                    
-                }
-                completionHandler(success,users)
-            } catch {
-                completionHandler(false,[UserModel]())
-                print("Eroor")
+        //https://reqres.in/api/users?page=2
+        //http://dummy.restapiexample.com/api/v1/employees
+        
+        Home.url = "http://dummy.restapiexample.com/api/v1/employees"
+        Home.httpMethod = .get
+
+        Home.loadData(apiWrapper: Home.apiWrapper()) { (response, model) in
+            switch response {
+            case .success:
+                completionHandler(true,model?.data)
+            case .error:
+                completionHandler(false,model?.data)
             }
         }
+//        ServiceUtility.callWebServiceWithLink("https://gorest.co.in/public/v2/users", parameters: NSMutableDictionary()) { success, resp in
+//            do {
+//                var users = [UserModel]()
+//                for user in resp {
+//                    let jsonDecoder = JSONDecoder()
+//                    let userData = try JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+//                    let user = try jsonDecoder.decode(UserModel.self, from: userData)
+//                    users.append(user)
+//
+//                }
+//                completionHandler(success,users)
+//            } catch {
+//                completionHandler(false,[UserModel]())
+//                print("Eroor")
+//            }
+//        }
     }
 }

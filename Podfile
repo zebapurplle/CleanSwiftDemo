@@ -8,5 +8,7 @@ target 'CleanSwiftDemo1' do
   # Pods for CleanSwiftDemo1
 pod 'IQKeyboardManagerSwift'
 pod 'AFNetworking'
+pod 'Alamofire','~> 4.5'
+pod 'SwiftyJSON'
 
 end

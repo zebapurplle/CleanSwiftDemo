@@ -32,9 +32,15 @@ class LoginInteractor: LoginBusinessLogic, LoginDataStore {
             guard let self = self else { return }
             if success {
                 self.loginWorker = LoginWorker()
-                self.loginWorker?.login(email: request.loginInfo.userName, password: request.loginInfo.password, completionHandler: { (success) -> Void in
-                    let response = Login.User.Response(succes: success,message: "Invalid username or password")
-                    self.presenter?.presentSomething(response: response)
+                self.loginWorker?.login(email: request.loginInfo.userName, password: request.loginInfo.password, completionHandler: { loginResp -> Void in
+                    
+                    if loginResp?.token != nil {
+                        let response = Login.User.Response(succes: true, message: meesage)
+                        self.presenter?.presentSomething(response: response)
+                    } else {
+                        let response = Login.User.Response(succes: false, message: loginResp?.reason)
+                        self.presenter?.presentSomething(response: response)
+                    }
                 })
             } else {
                 let response = Login.User.Response(succes: success,message: meesage)

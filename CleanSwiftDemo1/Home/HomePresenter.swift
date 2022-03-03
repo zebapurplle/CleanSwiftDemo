@@ -22,7 +22,7 @@ class HomePresenter: HomePresentationLogic
     
     // MARK: Do something
     func presentSomething(response: Home.User.Response) {
-        let viewModel = Home.User.ViewModel(userList: response.users)
+        let viewModel = Home.User.ViewModel(userList: response.data ?? [])
         viewController?.displaySomething(viewModel: viewModel)
     }
 }

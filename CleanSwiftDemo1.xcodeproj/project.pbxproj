@@ -27,6 +27,10 @@
 		E9BA903827BBEE5D004D9017 /* HomeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA903227BBEE5D004D9017 /* HomeModels.swift */; };
 		E9BA903927BBEE5D004D9017 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA903327BBEE5D004D9017 /* HomeViewController.swift */; };
 		E9BA903A27BBEE5D004D9017 /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BA903427BBEE5D004D9017 /* HomeInteractor.swift */; };
+		E9BD79B427CE375D00332604 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD79AE27CE375D00332604 /* APIService.swift */; };
+		E9BD79B527CE375D00332604 /* APIWrapperErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD79AF27CE375D00332604 /* APIWrapperErrors.swift */; };
+		E9BD79B827CE375D00332604 /* APIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD79B227CE375D00332604 /* APIWrapper.swift */; };
+		E9BD79B927CE375D00332604 /* APIWrapperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD79B327CE375D00332604 /* APIWrapperModel.swift */; };
 		E9CB908327BD2A7A00EBFFAB /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB908227BD2A7A00EBFFAB /* UserTableViewCell.swift */; };
 		E9CB908527BD2C9E00EBFFAB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB908427BD2C9E00EBFFAB /* User.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +61,10 @@
 		E9BA903227BBEE5D004D9017 /* HomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModels.swift; sourceTree = "<group>"; };
 		E9BA903327BBEE5D004D9017 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E9BA903427BBEE5D004D9017 /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
+		E9BD79AE27CE375D00332604 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		E9BD79AF27CE375D00332604 /* APIWrapperErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrapperErrors.swift; sourceTree = "<group>"; };
+		E9BD79B227CE375D00332604 /* APIWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrapper.swift; sourceTree = "<group>"; };
+		E9BD79B327CE375D00332604 /* APIWrapperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrapperModel.swift; sourceTree = "<group>"; };
 		E9CB908227BD2A7A00EBFFAB /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		E9CB908427BD2C9E00EBFFAB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +102,7 @@
 		2AA99397238D1F9C003EC092 /* CleanSwiftDemo1 */ = {
 			isa = PBXGroup;
 			children = (
+				E9BD79AD27CE374800332604 /* Network */,
 				2AA99398238D1F9C003EC092 /* AppDelegate.swift */,
 				2AA9939A238D1F9C003EC092 /* SceneDelegate.swift */,
 				2AA993B6238D208D003EC092 /* Login */,
@@ -160,6 +169,17 @@
 				2A20AF11238E45D70062E1E8 /* ServiceUtility.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		E9BD79AD27CE374800332604 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				E9BD79AE27CE375D00332604 /* APIService.swift */,
+				E9BD79B227CE375D00332604 /* APIWrapper.swift */,
+				E9BD79AF27CE375D00332604 /* APIWrapperErrors.swift */,
+				E9BD79B327CE375D00332604 /* APIWrapperModel.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		E9CB908127BD2A6600EBFFAB /* TableViewCell */ = {
@@ -295,6 +315,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AA993BE238D20D7003EC092 /* LoginWorker.swift in Sources */,
+				E9BD79B527CE375D00332604 /* APIWrapperErrors.swift in Sources */,
+				E9BD79B427CE375D00332604 /* APIService.swift in Sources */,
 				2AA993BD238D20D7003EC092 /* LoginPresenter.swift in Sources */,
 				E9BA903927BBEE5D004D9017 /* HomeViewController.swift in Sources */,
 				E9BA903A27BBEE5D004D9017 /* HomeInteractor.swift in Sources */,
@@ -302,8 +324,10 @@
 				E9BA903527BBEE5D004D9017 /* HomePresenter.swift in Sources */,
 				2A20AF12238E45D70062E1E8 /* ServiceUtility.swift in Sources */,
 				2AA993BF238D20D7003EC092 /* LoginRouter.swift in Sources */,
+				E9BD79B927CE375D00332604 /* APIWrapperModel.swift in Sources */,
 				2A20AF1C238EA7DF0062E1E8 /* ValidationWorker.swift in Sources */,
 				E9BA903727BBEE5D004D9017 /* HomeRouter.swift in Sources */,
+				E9BD79B827CE375D00332604 /* APIWrapper.swift in Sources */,
 				2AA993C1238D20D7003EC092 /* LoginViewController.swift in Sources */,
 				E9BA903827BBEE5D004D9017 /* HomeModels.swift in Sources */,
 				2AA99399238D1F9C003EC092 /* AppDelegate.swift in Sources */,

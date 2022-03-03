@@ -16,12 +16,12 @@ protocol HomeBusinessLogic {
 }
 
 protocol HomeDataStore {
-    var users: [UserModel]? { get }
+    var users: [UserModel1]? { get }
 }
 
 class HomeInteractor: HomeBusinessLogic, HomeDataStore {
     
-    var users: [UserModel]?
+    var users: [UserModel1]?
     var presenter: HomePresentationLogic?
     var worker: HomeWorker?
     
@@ -32,7 +32,7 @@ class HomeInteractor: HomeBusinessLogic, HomeDataStore {
         worker?.getUserList(completionHandler: { [weak self] success, users in
             guard let self = self else { return }
             self.users = users
-            let response = Home.User.Response(users: users)
+            let response = Home.User.Response(data: users)
             self.presenter?.presentSomething(response: response)
         })
     }

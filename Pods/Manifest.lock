@@ -14,21 +14,29 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - Alamofire (4.9.1)
   - IQKeyboardManagerSwift (6.5.2)
+  - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
   - AFNetworking
+  - Alamofire (~> 4.5)
   - IQKeyboardManagerSwift
+  - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - AFNetworking
+    - Alamofire
     - IQKeyboardManagerSwift
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   IQKeyboardManagerSwift: c75366f1f19590e8caeae45fcd5815c9289d6099
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 9b6f42aa189cce1353cead139159405b3b5de09c
+PODFILE CHECKSUM: 5f68d7f5abc821b2849d17f5192a8c75ef2b3cb4
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.11.2

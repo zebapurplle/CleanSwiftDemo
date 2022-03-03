@@ -24,10 +24,10 @@ class UserTableViewCell: UITableViewCell {
 
 extension UserTableViewCell {
     
-    func loadDataInCell(userInfo: UserModel) {
+    func loadDataInCell(userInfo: UserModel1) {
         
         nameLbl.text = userInfo.name ?? ""
-        emailLbl.text = userInfo.email ?? ""
-        genderLbl.text = userInfo.gender ?? ""
+        emailLbl.text = "\(userInfo.salary ?? 0)"
+        genderLbl.text = "\(userInfo.age ?? 0)"
     }
 }

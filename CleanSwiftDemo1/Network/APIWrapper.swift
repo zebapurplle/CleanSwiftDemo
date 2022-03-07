@@ -8,13 +8,21 @@
 import Foundation
 import Alamofire
 
+/// To request API, creat object of this wrapper, Init the object with APIRequestModel
+/// You can on the API debug mode by isDebugOn = true , default it's Off
 struct APIWrapper {
     var isDebugOn: Bool = false
     var requestModel: APIRequestModel = APIRequestModel(url: "")
     init(request: APIRequestModel) {
         self.requestModel = request
     }
-   
+    
+    /// This is the only function  will call after creating the APIRequestModel
+    /// This function internally calls API according to the API Request Model and return the output
+    /// - Parameters:
+    ///   - success: This block will call when API has a response. you can fetch the response directly from object
+    ///   - failed: This block will call when there is an error while getting the response.
+    /// The error is a collection of String, there is at least one error present in that Array
     func requestAPI(success:@escaping (AnyObject) -> Void, failed:@escaping (ErrorResponse) -> Void) {
         // Check for Network connection
         if !APIWrapperGlobalFunctions.isNetworkConnected() {
@@ -33,7 +41,12 @@ struct APIWrapper {
 
 // MARK: - RequestAPI
 extension APIWrapper {
-   
+    
+    /// This function call request API using Amlofire
+    ///
+    /// - Parameters:
+    ///   - success: When there is valid data response
+    ///   - failed: failed if any error occur
     private func request(success:@escaping (AnyObject) -> Void, failed:@escaping (ErrorResponse) -> Void) {
         let params = requestModel.parameters?.parameters ?? [:]
         Alamofire.request(requestModel.url,
@@ -41,14 +54,15 @@ extension APIWrapper {
                           parameters: params,
                           encoding: requestModel.encoding,
                           headers: requestModel.headers).responseJSON { (response) -> Void in
-                            self.handleResponse(response: response, success: { (responseValue) in
-                                success(responseValue)
-                            }, failed: { (error) in
-                                failed(error)
-                            })
+            self.handleResponse(response: response, success: { (responseValue) in
+                success(responseValue)
+            }, failed: { (error) in
+                failed(error)
+            })
         }
     }
     
+    /// Cancel request
     func cancelRequest() {
         let sessionManager = Alamofire.SessionManager.default
         sessionManager.session.getTasksWithCompletionHandler { dataTasks, _, _ in
@@ -61,6 +75,11 @@ extension APIWrapper {
 extension APIWrapper {
     
     /// This fucnction handle API response off all request
+    ///
+    /// - Parameters:
+    ///   - response: API DataResponse
+    ///   - success: Success closer
+    ///   - failed: failed closer
     func handleResponse(response: DataResponse<Any>,
                         success: @escaping (AnyObject) -> Void,
                         failed: @escaping (ErrorResponse) -> Void) {
@@ -80,7 +99,11 @@ extension APIWrapper {
             })
         }
     }
-   
+    
+    /// This funciton handdle the error Success of API
+    ///
+    /// - Parameters:
+    ///   - response: DataResponse from the API
     private func handleSuccess(response: DataResponse<Any>,
                                success: @escaping (AnyObject) -> Void,
                                failed: @escaping (ErrorResponse) -> Void) {
@@ -93,7 +116,12 @@ extension APIWrapper {
             })
         }
     }
-   
+    
+    /// This funciton handdle the error response of API
+    ///
+    /// - Parameters:
+    ///   - response: DataResponse from the API
+    ///   - failed: Error closer
     private func handleErrror(responseData: DataResponse<Any>, failed: @escaping (ErrorResponse) -> Void) {
         let statusCode = responseData.response?.statusCode ?? ResponseCode.pBadRequest
         var errorMessage = [ErrorMessage.pSomethingWentWrong]
@@ -111,7 +139,10 @@ extension APIWrapper {
         }
         failed(ErrorResponse(errorList: errorMessage, errorCode: statusCode, errorObject: responseData))
     }
-   
+    
+    /// This function check the error code for Unauthorised access 401
+    ///
+    /// - Parameter errorCode: API response code
     private func checkUnauthorisedAccess(errorCode: Int) -> Bool {
         if errorCode == ResponseCode.kUnauthorised {
             return true
@@ -119,7 +150,11 @@ extension APIWrapper {
             return false
         }
     }
-  
+    
+    /// This function return error message in case of API Success
+    ///
+    /// - Parameter responseData: API responseData
+    /// - Returns: error Message
     private  func createErrorForSuccess(responseData: DataResponse<Any>) -> [String] {
         if let reponseValue = responseData.result.value as? [String: AnyObject] {
             return self.fetchErrorFromResponse(reponse: reponseValue)
@@ -127,7 +162,11 @@ extension APIWrapper {
             return [ErrorMessage.pSomethingWentWrong]
         }
     }
-   
+    
+    /// This function fetch error from response body
+    ///
+    /// - Parameter reponse: reponse body as [String : AnyObject]
+    /// - Returns: Error String
     private func fetchErrorFromResponse(reponse: [String: AnyObject]) -> [String] {
         var errorValue: AnyObject?
         for messageKey in APIWrapperGlobalFunctions.kErrorMessageKey {
@@ -145,7 +184,11 @@ extension APIWrapper {
             return self.fetchErrorStringFromMulipleErrors(errorDic: error)
         }
     }
-   
+    
+    /// This function fetch single error message from multiple errors
+    ///
+    /// - Parameter errorDic: Error object
+    /// - Returns: error Message
     private func fetchErrorStringFromMulipleErrors(errorDic: AnyObject) -> [String] {
         var finalErrors: [String]?
         if errorDic is NSDictionary {
@@ -172,7 +215,11 @@ extension APIWrapper {
         }
         return [ErrorMessage.pSomethingWentWrong]
     }
-   
+    
+    /// This function return error message in case of API Failure
+    ///
+    /// - Parameter errorCode: API error code
+    /// - Returns: error Message
     private func createErrorForFailure(errorCode: Int) -> String {
         let allKnownErrorCode =  APIWrapperGlobalFunctions.KnownErrorCodes.keys
         if allKnownErrorCode.contains(errorCode) {
@@ -180,7 +227,10 @@ extension APIWrapper {
         }
         return ErrorMessage.pSomethingWentWrong
     }
-   
+    
+    /// This fucniton print the log if debuging mode is ON
+    ///
+    /// - Parameter object: print Object
     func debugPrint(object: AnyObject) {
         if self.isDebugOn {
             print(object)

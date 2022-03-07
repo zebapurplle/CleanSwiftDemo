@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-/// model used to request a API
+/// Model used to request a API
 struct APIRequestModel {
     
     var url: String = ""
@@ -17,6 +17,14 @@ struct APIRequestModel {
     var encoding: ParameterEncoding = URLEncoding.default
     var headers: HTTPHeaders?
     
+    /// In init function of APIRequestModel the API URL is compulsory object all other are optional
+    /// - parameters:
+    ///   - url: API request url
+    ///   - type: API request type
+    ///   - parameters: APIParameter
+    ///   - encoding: encoding description
+    ///   - headers: headers description
+    ///
     init(url: String) {
         self.url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     }
@@ -42,25 +50,12 @@ struct APIRequestModel {
         self.encoding = encoding
         self.headers = headers
     }
-    init(url: String,
-         type: HTTPMethod,
-         parameters: APIParameter,
-         encoding: ParameterEncoding,
-         headers: HTTPHeaders,
-         uploadFileUrls: [String]) {
-        self.url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        self.type = type
-        self.parameters = parameters
-        self.encoding = encoding
-        self.headers = headers
-    }
     
     init(url: String,
          type: HTTPMethod? = HTTPMethod.get,
          parameters: APIParameter? = nil,
          encoding: ParameterEncoding? = URLEncoding.default,
-         headers: HTTPHeaders? = nil,
-         uploadFileUrls: [String]? = nil) {
+         headers: HTTPHeaders? = nil) {
         self.url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         self.type = type ?? HTTPMethod.get
         self.parameters = parameters
@@ -73,7 +68,13 @@ struct APIParameter {
     var keys: [String] = []
     var values: [Any] = []
     var parameters: [String: Any] = [String: Any]()
-  
+    
+    /// Can pass keys and values in seperate array
+    /// Or can pass parameters directly
+    /// - parameters:
+    ///   - keys: Parameter key
+    ///   - values: corresponding values
+    ///   - parameters: complete Parameter
     init(keys: [String], values: [Any]) {
         self.keys = keys
         self.values = values
@@ -93,23 +94,29 @@ struct APIParameter {
 }
 
 struct ErrorResponse {
+    
     private var errorList: [String] = []
     private var errorCode: Int = 500
     private var errorObject: DataResponse<Any>?
+    
     init(errorList: [String], errorCode: Int, errorObject: DataResponse<Any>? = nil) {
         self.errorList = errorList
         self.errorCode = errorCode
         self.errorObject = errorObject
     }
+    
     func code() -> Int {
         return errorCode
     }
+    
     func error() -> String {
         return errorList[0]
     }
+    
     func errors() -> [String] {
         return errorList
     }
+    
     func object() -> DataResponse<Any>? {
         return errorObject
     }

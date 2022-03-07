@@ -19,6 +19,8 @@ protocol APIService {
     associatedtype APICodable: Codable
 }
 
+/// This protocol is used to define a default APIWrapper instance.
+/// Can customize further by providing values in implemented instance.
 protocol APIWrapperModelType: Codable {
     static var httpMethod: HTTPMethod { get }
     static var url: String {get}
@@ -36,6 +38,10 @@ extension APIWrapperModelType {
     static var params: [String: Any] {return [:]}
     static var headers: [String: String] {return ["":""]} /// Add your header key and value
     
+    /// Create APIWrapper instance for given httpMethod, url, and params.
+    /// No need to provide params if httpMethod type is GET.
+    ///
+    /// - Returns: APIWrapper instance
     static func apiWrapper() -> APIWrapper {
         var model = APIRequestModel(url: url, type: httpMethod)
         if httpMethod == .post {
@@ -48,6 +54,10 @@ extension APIWrapperModelType {
         return APIWrapper(request: model)
     }
     
+    /// Create APIWrapper instance for given httpMethod, url, and params.
+    /// No need to provide params if httpMethod type is GET.
+    ///
+    /// - Returns: APIWrapper instance
     func apiWrapper() -> APIWrapper? {
         do {
             let param = try asDictionary()
@@ -69,14 +79,25 @@ extension APIWrapperModelType {
 // MARK: - Web Service
 extension APIService {
     
+    /// A genric completion handler for data loading from server.
+    ///
+    /// - Parameters:
+    ///   - response: response of the Server and parsing.
+    ///   - model: an instance of the `associated` model
     typealias CompletionHandler = (_ response: APIResponse, _ model: APICodable?) -> Void
     
+    /// A genric method that load data from server and parse data to given model.
+    ///
+    /// - Parameters:
+    ///   - apiWrapper: an instance of APIWrapper
+    ///   - completion: completion handler
     static func loadData(apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
         // Call Web Service
         print(apiWrapper)
         self.callWebService(apiWrapper, completion: completion)
     }
    
+    // Call web service for given APIWrapper
     static private func callWebService(_ apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
         apiWrapper.requestAPI(success: { object in
             handleResponse(object: object, response: .success(""), completion: completion)
@@ -94,6 +115,11 @@ extension APIService {
         })
     }
    
+    /// Handle the server response and parse to the typed Model
+    ///
+    /// - Parameters:
+    ///   - object: Response Object
+    ///   - completion: completion
     static private func handleResponse(object: AnyObject,
                                        response: APIResponse,
                                        completion: @escaping CompletionHandler) {

@@ -31,6 +31,7 @@
 		E9BD79B527CE375D00332604 /* APIWrapperErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD79AF27CE375D00332604 /* APIWrapperErrors.swift */; };
 		E9BD79B827CE375D00332604 /* APIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD79B227CE375D00332604 /* APIWrapper.swift */; };
 		E9BD79B927CE375D00332604 /* APIWrapperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD79B327CE375D00332604 /* APIWrapperModel.swift */; };
+		E9BEBEEF27D732D800F46212 /* APIWrapper+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BEBEEE27D732D800F46212 /* APIWrapper+Extensions.swift */; };
 		E9CB908327BD2A7A00EBFFAB /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB908227BD2A7A00EBFFAB /* UserTableViewCell.swift */; };
 		E9CB908527BD2C9E00EBFFAB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB908427BD2C9E00EBFFAB /* User.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		E9BD79AF27CE375D00332604 /* APIWrapperErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrapperErrors.swift; sourceTree = "<group>"; };
 		E9BD79B227CE375D00332604 /* APIWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrapper.swift; sourceTree = "<group>"; };
 		E9BD79B327CE375D00332604 /* APIWrapperModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrapperModel.swift; sourceTree = "<group>"; };
+		E9BEBEEE27D732D800F46212 /* APIWrapper+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APIWrapper+Extensions.swift"; sourceTree = "<group>"; };
 		E9CB908227BD2A7A00EBFFAB /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		E9CB908427BD2C9E00EBFFAB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -176,6 +178,7 @@
 			children = (
 				E9BD79AE27CE375D00332604 /* APIService.swift */,
 				E9BD79B227CE375D00332604 /* APIWrapper.swift */,
+				E9BEBEEE27D732D800F46212 /* APIWrapper+Extensions.swift */,
 				E9BD79AF27CE375D00332604 /* APIWrapperErrors.swift */,
 				E9BD79B327CE375D00332604 /* APIWrapperModel.swift */,
 			);
@@ -314,6 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9BEBEEF27D732D800F46212 /* APIWrapper+Extensions.swift in Sources */,
 				2AA993BE238D20D7003EC092 /* LoginWorker.swift in Sources */,
 				E9BD79B527CE375D00332604 /* APIWrapperErrors.swift in Sources */,
 				E9BD79B427CE375D00332604 /* APIService.swift in Sources */,

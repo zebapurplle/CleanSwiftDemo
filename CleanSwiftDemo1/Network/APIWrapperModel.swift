@@ -16,6 +16,7 @@ struct APIRequestModel {
     var parameters: APIParameter?
     var encoding: ParameterEncoding = URLEncoding.default
     var headers: HTTPHeaders?
+    var multiPartData: APIMultiPartFormData?
     
     /// In init function of APIRequestModel the API URL is compulsory object all other are optional
     /// - parameters:
@@ -24,7 +25,8 @@ struct APIRequestModel {
     ///   - parameters: APIParameter
     ///   - encoding: encoding description
     ///   - headers: headers description
-    ///
+    ///   - multipartdata: multipartdata object
+    
     init(url: String) {
         self.url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     }
@@ -50,20 +52,37 @@ struct APIRequestModel {
         self.encoding = encoding
         self.headers = headers
     }
-    
+    init(url: String,
+         type: HTTPMethod,
+         parameters: APIParameter,
+         encoding: ParameterEncoding,
+         headers: HTTPHeaders,
+         uploadFileUrls: [String],
+         multiPartData: APIMultiPartFormData) {
+        self.url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        self.type = type
+        self.parameters = parameters
+        self.encoding = encoding
+        self.headers = headers
+        self.multiPartData = multiPartData
+    }
     init(url: String,
          type: HTTPMethod? = HTTPMethod.get,
          parameters: APIParameter? = nil,
          encoding: ParameterEncoding? = URLEncoding.default,
-         headers: HTTPHeaders? = nil) {
+         headers: HTTPHeaders? = nil,
+         uploadFileUrls: [String]? = nil,
+         multiPartData: APIMultiPartFormData? = nil) {
         self.url = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         self.type = type ?? HTTPMethod.get
         self.parameters = parameters
         self.encoding = encoding ?? URLEncoding.default
         self.headers = headers
+        self.multiPartData = multiPartData
     }
 }
-/// model used to create parameters for APIRequestModel
+
+/// Model used to create parameters for APIRequestModel
 struct APIParameter {
     var keys: [String] = []
     var values: [Any] = []
@@ -90,6 +109,86 @@ struct APIParameter {
             let key = self.keys[index]
             self.parameters[key] = self.values[index]
         }
+    }
+}
+/// Model used to create mulipart data for requuest model
+struct APIMultiPartFormData {
+    
+    var uploadFile: [Any]?
+    var fileNames: [String]?
+    var serverKeys: [String]?
+    var mimeTypes: [String]?
+    var imageQuality: Float?
+    var multipartformData: [MultiPartFormData]?
+    
+    /// Can provide the array of MultiPartFormData object or can upload file , file name, server key and mime type separately
+    /// If the keys are same for file Names, server Keys and mimeTypes then only single object is required in corresponding array
+    /// - parameters:
+    ///   - uploadFile: file's of type Data,Images or drive urls
+    ///   - fileNames: fileNames description
+    ///   - serverKeys: serverKeys description
+    ///   - mimeTypes: mimeTypes description
+    ///   - ImageQuality: ImageQuality description
+    init(multipartformData: [MultiPartFormData]) {
+        self.multipartformData = multipartformData
+    }
+    
+    init(uploadFile: [Any]? = nil,
+         fileNames: [String]? = nil,
+         serverKeys: [String]? = nil,
+         mimeTypes: [String]? = nil) {
+        self.uploadFile = uploadFile
+        self.fileNames = fileNames
+        self.serverKeys = serverKeys
+        self.mimeTypes = mimeTypes
+    }
+    
+    init(uploadFile: [Any]? = nil,
+         fileNames: [String]? = nil,
+         serverKeys: [String]? = nil,
+         mimeTypes: [String]? = nil,
+         imageQuality: Float? = 0.1) {
+        self.uploadFile = uploadFile
+        self.fileNames = fileNames
+        self.serverKeys = serverKeys
+        self.mimeTypes = mimeTypes
+        self.imageQuality = imageQuality
+    }
+    
+    init(multipartformData: [MultiPartFormData]? = nil,
+         uploadFile: [Any]? = nil,
+         fileNames: [String]? = nil,
+         serverKeys: [String]? = nil,
+         mimeTypes: [String]? = nil,
+         imageQuality: Float? = 0.1) {
+        self.uploadFile = uploadFile
+        self.fileNames = fileNames
+        self.serverKeys = serverKeys
+        self.mimeTypes = mimeTypes
+        self.imageQuality = imageQuality
+        self.multipartformData = multipartformData
+    }
+}
+
+/// MultiPartFormData model
+struct MultiPartFormData {
+    var uploadFile: Data = Data()
+    var fileName: String = ""
+    var serverKey: String = ""
+    var mimeTypes: String = ""
+    
+    /// MultiPartFormData data model
+    ///
+    /// - parameters:
+    ///   - uploadFile: upload data file
+    ///   - fileName: fileName description
+    ///   - serverKey: serverKey description
+    ///   - mimeTypes: mimeTypes description
+    init(uploadFile: Data, fileName: String, serverKey: String, mimeTypes: String ) {
+        self.uploadFile = uploadFile
+        self.fileName = fileName
+        self.serverKey = serverKey
+        self.mimeTypes = mimeTypes
     }
 }
 

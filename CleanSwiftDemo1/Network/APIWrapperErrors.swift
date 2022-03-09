@@ -11,6 +11,7 @@ import SystemConfiguration
 
 /// This stucture contains all the Error Message
 struct ErrorMessage {
+    static let pUnKnownRequest = "Request is not valid"
     static let pSomethingWentWrong = "Something went wrong. Please try again in sometime."
     static let pNoNetwork = "Sorry your request couldn’t be processed beacuse of a server issue. Please try again."
     static let pBadRequest =  "Please check the inputs then try again."
@@ -80,5 +81,15 @@ public struct APIWrapperGlobalFunctions {
     static func internalServerError(_ error: String? = nil) -> ErrorResponse {
         return ErrorResponse(errorList: [error ?? ErrorMessage.pSomethingWentWrong],
                              errorCode: ResponseCode.InternalServerError)
+    }
+    
+    /// This function return the data from Imgae
+    ///
+    /// - Parameters:
+    ///   - image: Input Image
+    ///   - compressionQuality: compression quality
+    /// - Returns: data of the image
+    static func dataFromImage(image: UIImage, compressionQuality: Float) -> Data? {
+        return image.jpegData(compressionQuality: CGFloat(compressionQuality))
     }
 }

@@ -23,7 +23,7 @@ class HomeWorker {
         Home.url = "http://dummy.restapiexample.com/api/v1/employees"
         Home.httpMethod = .get
 
-        Home.loadData(apiWrapper: Home.apiWrapper()) { (response, model) in
+        Home.callWedSercice(apiWrapper: Home.apiWrapper()) { (response, model) in
             switch response {
             case .success:
                 completionHandler(true,model?.data)

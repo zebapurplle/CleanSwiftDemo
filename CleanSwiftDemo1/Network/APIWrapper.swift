@@ -71,6 +71,34 @@ extension APIWrapper {
     }
 }
 
+extension APIWrapper {
+    
+    /// This function is used to Upload the files from
+    ///
+    /// - Parameters:
+    ///   - progressValue: this call back return thr % of data uploaded
+    ///   - success: success when uploading will finish
+    ///   - failed: in case of any error this call back call with collection of error
+    func requestAPI(progressValue:@escaping(Double) -> Void,
+                    success:@escaping (AnyObject) -> Void,
+                    failed:@escaping (ErrorResponse) -> Void) {
+        // Check for Network connection
+        if !APIWrapperGlobalFunctions.isNetworkConnected() {
+            failed(APIWrapperGlobalFunctions.noNetworkError())
+            return
+        }
+        self.printRequestModel()
+        // Call internal function fro API calling
+        self.upload(progressValue: { (progress) in
+            progressValue(progress)
+        }, success: { (response) in
+            success(response)
+        }, failed: { (error) in
+            failed(error)
+        })
+    }
+}
+
 // MARK: - Error handling
 extension APIWrapper {
     
@@ -236,6 +264,7 @@ extension APIWrapper {
             print(object)
         }
     }
+    
     /// Print the request model
     private func printRequestModel() {
         debugPrint(object: "Request Model" as AnyObject)

@@ -91,14 +91,14 @@ extension APIService {
     /// - Parameters:
     ///   - apiWrapper: an instance of APIWrapper
     ///   - completion: completion handler
-    static func loadData(apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
+    static func callWedSercice(apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
         // Call Web Service
         print(apiWrapper)
-        self.callWebService(apiWrapper, completion: completion)
+        self.callWebServiceFromServer(apiWrapper, completion: completion)
     }
    
     // Call web service for given APIWrapper
-    static private func callWebService(_ apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
+    static private func callWebServiceFromServer(_ apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
         apiWrapper.requestAPI(success: { object in
             handleResponse(object: object, response: .success(""), completion: completion)
         }, failed: { error in
@@ -146,6 +146,27 @@ extension APIService {
         }
     }
 }
+
+extension APIService {
+    
+    static func callWebServiceWithFiles(apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
+        // Call Web Service
+        self.callWebServiceForFiles(apiWrapper, completion: completion)
+    }
+    
+    static private func callWebServiceForFiles(_ apiWrapper: APIWrapper, completion: @escaping CompletionHandler) {
+        apiWrapper.requestAPI(progressValue: { prg in
+            print(prg)
+        }, success: { object in
+            handleResponse(object: object, response: .success(""), completion: completion)
+        }, failed: { error in
+            print(error)
+            // Web service failure go back with error
+            completion(APIResponse.error(error.error()), nil)
+        })
+    }
+}
+
 // MARK: - Encodable
 extension Encodable {
     func asDictionary() throws -> [String: Any] {

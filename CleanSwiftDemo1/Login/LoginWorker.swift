@@ -22,7 +22,7 @@ class LoginWorker
         Login.params = ["username" : email,"password" : password]
         Login.httpMethod = .post
         
-        Login.loadData(apiWrapper: Login.apiWrapper()) { response, model in
+        Login.callWedSercice(apiWrapper: Login.apiWrapper()) { response, model in
             switch response {
             case .success:
                 completionHandler(model)
